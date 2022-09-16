@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "377345894977",
+    "firebase_url": "https://firechat-dc870-default-rtdb.firebaseio.com",
+    "project_id": "firechat-dc870",
+    "storage_bucket": "firechat-dc870.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377345894977:android:73a12cf327471fbc25f4c0",
+        "android_client_info": {
+          "package_name": "com.example.fire_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "377345894977-t5dhk5kisf55rmsc0fj889n5n07bk8lq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXXEJjdxY5mo_Xaumzve3EZJaUOUo62-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "377345894977-t5dhk5kisf55rmsc0fj889n5n07bk8lq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "377345894977-dekj93057qfunmet3s75j9pqudh1nqrk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fireChat"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
