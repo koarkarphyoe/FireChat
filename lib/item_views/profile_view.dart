@@ -1,14 +1,17 @@
+import 'package:fire_chat/model/custom_object/custom_object.dart';
 import 'package:flutter/material.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({
+  final NewFeedCustomObject newFeed;
+  const ProfileView(
+    this.newFeed, {
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 16,bottom:16),
+      padding: const EdgeInsets.only(top: 16, bottom: 16),
       child: SizedBox(
         height: 400,
         width: MediaQuery.of(context).size.width,
@@ -18,24 +21,24 @@ class ProfileView extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ProfileImageView(),
+                ProfileImageView(newFeed.profilePicture.toString()),
                 const SizedBox(
                   width: 16,
                 ),
-                ProfileNameAndLocationView(),
-                Spacer(),
+                ProfileNameAndLocationView(newFeed.userName.toString()),
+                const Spacer(),
                 MoreButtonView(),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
-            PostImageView(),
-            SizedBox(
+            PostImageView(newFeed.postImage.toString()),
+            const SizedBox(
               height: 16,
             ),
-            PostTextView(),
-            SizedBox(height: 16),
+            PostTextView(newFeed.description.toString()),
+            const SizedBox(height: 16),
             Row(
               children: [
                 Text(
@@ -47,7 +50,9 @@ class ProfileView extends StatelessWidget {
                 ),
                 Spacer(),
                 Icon(Icons.comment, size: 30, color: Colors.grey),
-                SizedBox(width: 16,),
+                SizedBox(
+                  width: 16,
+                ),
                 Icon(
                   Icons.favorite,
                   size: 30,
@@ -63,7 +68,8 @@ class ProfileView extends StatelessWidget {
 }
 
 class PostTextView extends StatelessWidget {
-  const PostTextView({
+  final String postText;
+  const PostTextView(this.postText,{
     Key? key,
   }) : super(key: key);
 
@@ -71,7 +77,7 @@ class PostTextView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Text(
-        "Social media are interactive technologies that facilitate the creation and sharing of information, ideas, interests, and other forms of expression through virtual communities and networks. While challenges to the definition of social media arise due to the variety of stand-alone and built-in social media services currently available, there are some common features:Social media are interactive Web 2.0 Internet-based applications. User-generated content—such as text posts or comments, digital photos or videos, and data generated through all online interactions—is the lifeblood of social media.",
+        postText,
         style: TextStyle(fontSize: 10, color: Colors.black54),
       ),
     );
@@ -79,7 +85,9 @@ class PostTextView extends StatelessWidget {
 }
 
 class PostImageView extends StatelessWidget {
-  const PostImageView({
+  final String postImage;
+  const PostImageView(
+    this.postImage, {
     Key? key,
   }) : super(key: key);
 
@@ -88,10 +96,10 @@ class PostImageView extends StatelessWidget {
     return Container(
       height: 200,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          image: DecorationImage(
-              image: NetworkImage(
-                  "https://c.wallhere.com/images/6d/3e/de52cef4e9c49e8dc99099ed87b7-1512821.jpg!d"))),
+        borderRadius: BorderRadius.circular(10),
+        image:
+            DecorationImage(image: NetworkImage(postImage), fit: BoxFit.fill),
+      ),
     );
   }
 }
@@ -113,7 +121,9 @@ class MoreButtonView extends StatelessWidget {
 }
 
 class ProfileImageView extends StatelessWidget {
-  const ProfileImageView({
+  final String profileImage;
+  const ProfileImageView(
+    this.profileImage, {
     Key? key,
   }) : super(key: key);
 
@@ -125,7 +135,7 @@ class ProfileImageView extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(50),
         child: Image.network(
-          "https://c.wallhere.com/images/52/3d/c627f955498778a6d43e0b53298d-1388913.jpg!d",
+          profileImage,
           fit: BoxFit.fill,
         ),
       ),
@@ -134,7 +144,9 @@ class ProfileImageView extends StatelessWidget {
 }
 
 class ProfileNameAndLocationView extends StatelessWidget {
-  const ProfileNameAndLocationView({
+  final String userName;
+  const ProfileNameAndLocationView(
+    this.userName, {
     Key? key,
   }) : super(key: key);
 
@@ -145,7 +157,7 @@ class ProfileNameAndLocationView extends StatelessWidget {
       children: [
         Row(children: [
           Text(
-            "Noah",
+            userName,
             style: TextStyle(
                 color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
           ),
