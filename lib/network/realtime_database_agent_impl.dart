@@ -6,8 +6,6 @@ import '../model/custom_object/custom_object.dart';
 const newFeedPath = "newfeed";
 
 class RealtimeDatabaseAgentImpl extends RealtimeDatabaseAgent {
-
-
   //Singleton
   static final RealtimeDatabaseAgentImpl _singleton =
       RealtimeDatabaseAgentImpl._internal();
@@ -15,7 +13,6 @@ class RealtimeDatabaseAgentImpl extends RealtimeDatabaseAgent {
     return _singleton;
   }
   RealtimeDatabaseAgentImpl._internal();
-
 
   //Network call
   FirebaseDatabase database = FirebaseDatabase.instance;
@@ -35,5 +32,18 @@ class RealtimeDatabaseAgentImpl extends RealtimeDatabaseAgent {
 
       return dataList;
     });
+  }
+
+  @override
+  Future<void> addNewPost(NewFeedCustomObject newFeed) {
+    return database
+        .ref(newFeedPath)
+        .child(newFeed.id.toString())
+        .set(newFeed.toJson());
+  }
+
+  @override
+  void deletePost(int postId) {
+    database.ref(newFeedPath).child(postId.toString()).remove();
   }
 }

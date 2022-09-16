@@ -18,8 +18,12 @@ class NewFeedCustomObject {
   @JsonKey(name: "user_name")
   String? userName;
 
-  NewFeedCustomObject(this.description, this.id, this.postImage,
-      this.profilePicture, this.userName);
+  NewFeedCustomObject(
+      this.description,
+      this.id,
+      this.postImage,
+      this.profilePicture,
+      this.userName);
 
   factory NewFeedCustomObject.fromJson(Map<String, dynamic> json) =>
       _$NewFeedCustomObjectFromJson(json);

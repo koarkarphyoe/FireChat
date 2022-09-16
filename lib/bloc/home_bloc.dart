@@ -15,4 +15,8 @@ class HomeBloc extends ChangeNotifier {
       notifyListeners();
     });
   }
+
+  void deletePost(int id) {
+    dataModel.deletePost(id);
+  }
 }

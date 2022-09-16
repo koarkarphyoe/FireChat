@@ -5,8 +5,8 @@ import 'package:fire_chat/pages/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() async{
-   WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -20,13 +20,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    dataModel.getNewFeedList().listen(
-      (event) {
-        // print(event.length.toString());
-      },
-    );
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

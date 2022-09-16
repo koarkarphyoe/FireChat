@@ -41,11 +41,13 @@ class HomePage extends StatelessWidget {
                     itemBuilder: ((context, index) {
                       return Consumer<HomeBloc>(builder:
                           (BuildContext context, value, Widget? child) {
-                        return ProfileView(value.newFeedList![index]);
+                        return ProfileView(value.newFeedList![index], (id) {
+                          value.deletePost(id);
+                        });
                       });
                     }),
                   )
-                : Center(
+                : const Center(
                     child: CircularProgressIndicator(),
                   );
           },

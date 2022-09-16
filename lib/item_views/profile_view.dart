@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 
 class ProfileView extends StatelessWidget {
   final NewFeedCustomObject newFeed;
+  final Function(int id) onTapDelete;
   const ProfileView(
-    this.newFeed, {
+    this.newFeed,
+    this.onTapDelete, {
     Key? key,
   }) : super(key: key);
 
@@ -27,7 +29,9 @@ class ProfileView extends StatelessWidget {
                 ),
                 ProfileNameAndLocationView(newFeed.userName.toString()),
                 const Spacer(),
-                MoreButtonView(),
+                MoreButtonView(() {
+                  onTapDelete(newFeed.id!);
+                })
               ],
             ),
             const SizedBox(
@@ -40,7 +44,7 @@ class ProfileView extends StatelessWidget {
             PostTextView(newFeed.description.toString()),
             const SizedBox(height: 16),
             Row(
-              children: [
+              children: const [
                 Text(
                   "See Comments",
                   style: TextStyle(
@@ -69,7 +73,8 @@ class ProfileView extends StatelessWidget {
 
 class PostTextView extends StatelessWidget {
   final String postText;
-  const PostTextView(this.postText,{
+  const PostTextView(
+    this.postText, {
     Key? key,
   }) : super(key: key);
 
@@ -78,7 +83,7 @@ class PostTextView extends StatelessWidget {
     return Expanded(
       child: Text(
         postText,
-        style: TextStyle(fontSize: 10, color: Colors.black54),
+        style: const TextStyle(fontSize: 10, color: Colors.black54),
       ),
     );
   }
@@ -105,18 +110,37 @@ class PostImageView extends StatelessWidget {
 }
 
 class MoreButtonView extends StatelessWidget {
-  const MoreButtonView({
+  final Function() onTapDelete;
+  const MoreButtonView(
+    this.onTapDelete, {
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-        onTap: () {},
-        child: Icon(
-          Icons.more_vert,
-          size: 30,
-        ));
+    return PopupMenuButton(
+      itemBuilder: ((context) {
+        return [
+          PopupMenuItem(
+            onTap: () {
+              onTapDelete();
+            },
+            value: 1,
+            child: const Text("Delete"),
+          ),
+          PopupMenuItem(
+            onTap: () {},
+            value: 2,
+            child: const Text("Edit"),
+          )
+        ];
+      }),
+      icon: const Icon(
+        Icons.more_vert,
+        size: 30,
+        color: Colors.black,
+      ),
+    );
   }
 }
 
@@ -158,22 +182,22 @@ class ProfileNameAndLocationView extends StatelessWidget {
         Row(children: [
           Text(
             userName,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          SizedBox(
+          const SizedBox(
             width: 16,
           ),
-          Text(
+          const Text(
             "- 3hrs ago",
             style: TextStyle(
                 color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 12),
           ),
         ]),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
-        Text(
+        const Text(
           "Paris",
           style: TextStyle(
               color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 12),
