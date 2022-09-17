@@ -39,12 +39,30 @@ class HomePage extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 16, right: 16),
                     itemCount: bloc.newFeedList!.length,
                     itemBuilder: ((context, index) {
-                      return Consumer<HomeBloc>(builder:
-                          (BuildContext context, value, Widget? child) {
-                        return ProfileView(value.newFeedList![index], (id) {
-                          value.deletePost(id);
-                        });
-                      });
+                      return Consumer<HomeBloc>(
+                        builder: (BuildContext context, value, Widget? child) {
+                          return ProfileView(
+                            value.newFeedList![index],
+                            (id) {
+                              value.deletePost(id);
+                            },
+                            (id) {
+                              Future.delayed(const Duration(seconds: 0))
+                                  .then((value) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: ((context) {
+                                      // print(id.toString());
+                                      return AddNewPostPage(id: id);
+                                    }),
+                                  ),
+                                );
+                              });
+                            },
+                          );
+                        },
+                      );
                     }),
                   )
                 : const Center(

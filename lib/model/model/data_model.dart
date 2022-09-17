@@ -4,4 +4,6 @@ abstract class DataModel {
   Stream<List<NewFeedCustomObject>> getNewFeedList();
   Future<void> addNewPost(String description);
   void deletePost(int postId);
+  Future<NewFeedCustomObject> getNewFeedById(int id);
+  Future<void> editPost(NewFeedCustomObject editedNewFeed);
 }

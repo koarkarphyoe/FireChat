@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AddNewPostPage extends StatelessWidget {
-  const AddNewPostPage({Key? key}) : super(key: key);
+  final int? id;
+  const AddNewPostPage({this.id, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: AddNewPostBloc(),
+      value: AddNewPostBloc(id),
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -43,13 +44,14 @@ class AddNewPostPage extends StatelessWidget {
                         border:
                             Border.all(color: Colors.blue.shade100, width: 2)),
                     child: TextField(
+                      controller: TextEditingController(text: bloc.description),
                       decoration: const InputDecoration(
                         hintText: "Show your mind!",
                         border: InputBorder.none,
                       ),
                       maxLines: 50,
-                      onChanged: ((value) {
-                        bloc.description = value;
+                      onChanged: ((text) {
+                        bloc.description = text;
                       }),
                     ),
                   ),
@@ -78,7 +80,10 @@ class AddNewPostPage extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      bloc.addNewPost().then((value) => Navigator.pop(context));
+                      // bloc.addNewPost().then((value) => Navigator.pop(context));
+                      bloc
+                          .onTapPostButtonInView()
+                          .then((value) => Navigator.pop(context));
                     },
                     child: Container(
                       width: 100,

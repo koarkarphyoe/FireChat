@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 class ProfileView extends StatelessWidget {
   final NewFeedCustomObject newFeed;
   final Function(int id) onTapDelete;
+  final Function(int id) onTapEdit;
   const ProfileView(
     this.newFeed,
-    this.onTapDelete, {
+    this.onTapDelete,this.onTapEdit, {
     Key? key,
   }) : super(key: key);
 
@@ -31,6 +32,8 @@ class ProfileView extends StatelessWidget {
                 const Spacer(),
                 MoreButtonView(() {
                   onTapDelete(newFeed.id!);
+                }, () {
+                  onTapEdit(newFeed.id!);
                 })
               ],
             ),
@@ -111,8 +114,10 @@ class PostImageView extends StatelessWidget {
 
 class MoreButtonView extends StatelessWidget {
   final Function() onTapDelete;
+  final Function() onTapEdit;
   const MoreButtonView(
-    this.onTapDelete, {
+    this.onTapDelete,
+    this.onTapEdit, {
     Key? key,
   }) : super(key: key);
 
@@ -129,7 +134,9 @@ class MoreButtonView extends StatelessWidget {
             child: const Text("Delete"),
           ),
           PopupMenuItem(
-            onTap: () {},
+            onTap: () {
+              onTapEdit();
+            },
             value: 2,
             child: const Text("Edit"),
           )

@@ -4,4 +4,5 @@ abstract class RealtimeDatabaseAgent {
   Stream<List<NewFeedCustomObject>> getNewFeedList();
   Future<void> addNewPost(NewFeedCustomObject newFeed);
   void deletePost(int postId);
+  Future<NewFeedCustomObject> getNewFeedById(int id);
 }

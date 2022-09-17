@@ -1,7 +1,6 @@
 import 'package:fire_chat/model/custom_object/custom_object.dart';
 import 'package:fire_chat/network/realtime_database_agent.dart';
 import 'package:fire_chat/network/realtime_database_agent_impl.dart';
-
 import 'data_model.dart';
 
 class DataModelImpl extends DataModel {
@@ -34,5 +33,15 @@ class DataModelImpl extends DataModel {
   @override
   void deletePost(int postId) {
     realtimeDatabaseAgent.deletePost(postId);
+  }
+
+  @override
+  Future<NewFeedCustomObject> getNewFeedById(int id) {
+    return realtimeDatabaseAgent.getNewFeedById(id);
+  }
+
+  @override
+  Future<void> editPost(NewFeedCustomObject editedNewFeed) {
+    return realtimeDatabaseAgent.addNewPost(editedNewFeed);
   }
 }

@@ -46,4 +46,12 @@ class RealtimeDatabaseAgentImpl extends RealtimeDatabaseAgent {
   void deletePost(int postId) {
     database.ref(newFeedPath).child(postId.toString()).remove();
   }
+
+  @override
+  Future<NewFeedCustomObject> getNewFeedById(int id) {
+    return database.ref(newFeedPath).child(id.toString()).once().then((value) {
+      return NewFeedCustomObject.fromJson(
+          Map<String, dynamic>.from(value.snapshot.value as dynamic));
+    });
+  }
 }
