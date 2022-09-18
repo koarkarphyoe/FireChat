@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fire_chat/model/custom_object/custom_object.dart';
 import 'package:fire_chat/network/realtime_database_agent.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 const newFeedPath = "newfeed";
+const uploadPath = "upload";
 
 class FirebaseStorageAgentImpl extends RealtimeDatabaseAgent {
   static final FirebaseStorageAgentImpl _singleton =
@@ -13,6 +17,7 @@ class FirebaseStorageAgentImpl extends RealtimeDatabaseAgent {
   FirebaseStorageAgentImpl._internal();
 
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
   @override
   Future<void> addNewPost(NewFeedCustomObject newFeed) {
@@ -44,6 +49,17 @@ class FirebaseStorageAgentImpl extends RealtimeDatabaseAgent {
       return event.docs.map((e) {
         return NewFeedCustomObject.fromJson(e.data());
       }).toList();
+    });
+  }
+
+  @override
+  Future<String> uploadImage(File image) {
+    return firebaseStorage
+        .ref(uploadPath)
+        .child("${DateTime.now().millisecondsSinceEpoch}")
+        .putFile(image)
+        .then((takeSnapshot) {
+      return takeSnapshot.ref.getDownloadURL();
     });
   }
 }

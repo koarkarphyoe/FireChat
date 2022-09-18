@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fire_chat/network/realtime_database_agent.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -53,5 +55,11 @@ class RealtimeDatabaseAgentImpl extends RealtimeDatabaseAgent {
       return NewFeedCustomObject.fromJson(
           Map<String, dynamic>.from(value.snapshot.value as dynamic));
     });
+  }
+
+  @override
+  Future<String> uploadImage(File image) {
+    // TODO: implement uploadImage
+    throw UnimplementedError();
   }
 }

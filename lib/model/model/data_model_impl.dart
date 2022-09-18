@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:fire_chat/model/custom_object/custom_object.dart';
 import 'package:fire_chat/network/firebase_storage_agent_impl.dart';
 import 'package:fire_chat/network/realtime_database_agent.dart';
@@ -20,16 +21,30 @@ class DataModelImpl extends DataModel {
   }
 
   @override
-  Future<void> addNewPost(String description) {
+  Future<void> addNewPost(String description, File? image) {
+    if (image != null) {
+      return realtimeDatabaseAgent.uploadImage(image).then((imageLink) {
+        return modifiedVOWithImageLink(description, imageLink).then((newFeed) {
+          return realtimeDatabaseAgent.addNewPost(newFeed);
+        });
+      });
+    } else {
+      return modifiedVOWithImageLink(description, "").then((newFeed) {
+        return realtimeDatabaseAgent.addNewPost(newFeed);
+      });
+    }
+  }
+
+  Future<NewFeedCustomObject> modifiedVOWithImageLink(
+      String description, String imageLink) {
     var newId = DateTime.now().millisecondsSinceEpoch;
     var newFeed = NewFeedCustomObject(
         description,
         newId,
-        "https://c.wallhere.com/images/aa/aa/89ad15b6d96bc89cef0aaee59a73-1579643.jpg!d",
+        imageLink,
         "https://c.wallhere.com/images/13/c5/4009382d8def55e9a6874212be0b-1561467.jpg!d",
         "Arkar");
-
-    return realtimeDatabaseAgent.addNewPost(newFeed);
+    return Future.value(newFeed);
   }
 
   @override
@@ -45,5 +60,10 @@ class DataModelImpl extends DataModel {
   @override
   Future<void> editPost(NewFeedCustomObject editedNewFeed) {
     return realtimeDatabaseAgent.addNewPost(editedNewFeed);
+  }
+
+  @override
+  Future<String> uploadImage(File image) {
+    return realtimeDatabaseAgent.uploadImage(image);
   }
 }

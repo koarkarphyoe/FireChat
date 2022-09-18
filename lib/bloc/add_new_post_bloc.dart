@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fire_chat/model/custom_object/custom_object.dart';
 import 'package:fire_chat/model/model/data_model.dart';
 import 'package:fire_chat/model/model/data_model_impl.dart';
@@ -14,7 +16,11 @@ class AddNewPostBloc extends ChangeNotifier {
 
   bool isEditMode = false;
 
+  bool isLoading = false;
+
   NewFeedCustomObject? newFeed;
+
+  File? chooseImage;
 
   AddNewPostBloc(int? id) {
     if (id != null) {
@@ -35,14 +41,20 @@ class AddNewPostBloc extends ChangeNotifier {
       return Future.error("error");
     } else {
       isAddPostError = false;
-      return dataModel.addNewPost(description!);
+      return dataModel.addNewPost(description!, chooseImage!).then((value) {
+        isLoading = false;
+        notifyListeners();
+      });
     }
   }
 
   Future<void> editedNewPost() {
     newFeed!.description = description;
     if (newFeed != null) {
-      return dataModel.editPost(newFeed!);
+      return dataModel.editPost(newFeed!).then((value) {
+        isLoading = false;
+        notifyListeners();
+      });
     } else {
       return Future.error("error");
     }
@@ -68,9 +80,23 @@ class AddNewPostBloc extends ChangeNotifier {
 
   Future<void> onTapPostButtonInView() {
     if (isEditMode) {
+      isLoading = true;
+      notifyListeners();
       return editedNewPost();
     } else {
+      isLoading = true;
+      notifyListeners();
       return addNewPost();
     }
+  }
+
+  void onTapChooseImag(File image) {
+    chooseImage = image;
+    notifyListeners();
+  }
+
+  void onTapDeleteIcon() {
+    chooseImage = null;
+    notifyListeners();
   }
 }
