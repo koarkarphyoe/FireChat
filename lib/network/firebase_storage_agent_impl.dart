@@ -16,19 +16,26 @@ class FirebaseStorageAgentImpl extends RealtimeDatabaseAgent {
 
   @override
   Future<void> addNewPost(NewFeedCustomObject newFeed) {
-    // TODO: implement addNewPost
-    throw UnimplementedError();
+    return firebaseFirestore
+        .collection(newFeedPath)
+        .doc(newFeed.id.toString())
+        .set(newFeed.toJson());
   }
 
   @override
   void deletePost(int postId) {
-    // TODO: implement deletePost
+    firebaseFirestore.collection(newFeedPath).doc(postId.toString()).delete();
   }
 
   @override
   Future<NewFeedCustomObject> getNewFeedById(int id) {
-    // TODO: implement getNewFeedById
-    throw UnimplementedError();
+    return firebaseFirestore
+        .collection(newFeedPath)
+        .doc(id.toString())
+        .get()
+        .then((value) {
+      return NewFeedCustomObject.fromJson(value.data()!);
+    });
   }
 
   @override
