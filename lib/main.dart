@@ -2,6 +2,8 @@ import 'package:fire_chat/firebase_options.dart';
 import 'package:fire_chat/model/model/data_model.dart';
 import 'package:fire_chat/model/model/data_model_impl.dart';
 import 'package:fire_chat/pages/home_page.dart';
+import 'package:fire_chat/pages/login_page.dart';
+import 'package:fire_chat/pages/register_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: const LoginPage(),
     );
   }
 }
