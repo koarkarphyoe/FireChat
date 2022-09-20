@@ -1,11 +1,14 @@
 import 'dart:io';
 
+import 'package:fire_chat/model/custom_object/user_vo.dart';
 import 'package:fire_chat/network/realtime_database_agent.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import '../model/custom_object/custom_object.dart';
 
 const newFeedPath = "newfeed";
+const newUserPath = "users";
 
 class RealtimeDatabaseAgentImpl extends RealtimeDatabaseAgent {
   //Singleton
@@ -18,6 +21,9 @@ class RealtimeDatabaseAgentImpl extends RealtimeDatabaseAgent {
 
   //Network call
   FirebaseDatabase database = FirebaseDatabase.instance;
+
+  //Authentication
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Stream<List<NewFeedCustomObject>> getNewFeedList() {
@@ -61,5 +67,26 @@ class RealtimeDatabaseAgentImpl extends RealtimeDatabaseAgent {
   Future<String> uploadImage(File image) {
     // TODO: implement uploadImage
     throw UnimplementedError();
+  }
+
+  @override
+  Future registerNewUser(UserVo newUser) {
+    return auth
+        .createUserWithEmailAndPassword(
+            email: newUser.userEmail ?? "",
+            password: newUser.userPassword ?? "")
+        .then((credential) =>
+            credential.user?..updateDisplayName(newUser.userName))
+        .then((user) {
+      newUser.id = user?.uid ?? "";
+      _addNewUserToRealtimeDatabase(newUser);
+    });
+  }
+
+  Future<void> _addNewUserToRealtimeDatabase(UserVo newUser) {
+    return database
+        .ref(newUserPath)
+        .child(newUser.id.toString())
+        .set(newUser.toJson());
   }
 }

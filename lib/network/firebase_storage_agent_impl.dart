@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fire_chat/model/custom_object/custom_object.dart';
+import 'package:fire_chat/model/custom_object/user_vo.dart';
 import 'package:fire_chat/network/realtime_database_agent.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -16,7 +17,10 @@ class FirebaseStorageAgentImpl extends RealtimeDatabaseAgent {
   }
   FirebaseStorageAgentImpl._internal();
 
+  //Cloud firestore
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+  //Storage
   FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
   @override
@@ -61,5 +65,11 @@ class FirebaseStorageAgentImpl extends RealtimeDatabaseAgent {
         .then((takeSnapshot) {
       return takeSnapshot.ref.getDownloadURL();
     });
+  }
+
+  @override
+  Future registerNewUser(UserVo newUser) {
+    // TODO: implement registerNewUser
+    throw UnimplementedError();
   }
 }

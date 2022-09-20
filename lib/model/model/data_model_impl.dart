@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:fire_chat/model/custom_object/custom_object.dart';
+import 'package:fire_chat/model/custom_object/user_vo.dart';
 import 'package:fire_chat/network/firebase_storage_agent_impl.dart';
 import 'package:fire_chat/network/realtime_database_agent.dart';
 import 'package:fire_chat/network/realtime_database_agent_impl.dart';
@@ -11,9 +12,12 @@ class DataModelImpl extends DataModel {
     return _singleton;
   }
   DataModelImpl._internal();
+  
+  //RealtimeDatabase
+  RealtimeDatabaseAgent realtimeDatabaseAgent = RealtimeDatabaseAgentImpl();
 
-  // RealtimeDatabaseAgent realtimeDatabaseAgent = RealtimeDatabaseAgentImpl();
-  RealtimeDatabaseAgent realtimeDatabaseAgent = FirebaseStorageAgentImpl();
+  //CloudFirestore
+  // RealtimeDatabaseAgent realtimeDatabaseAgent = FirebaseStorageAgentImpl();
 
   @override
   Stream<List<NewFeedCustomObject>> getNewFeedList() {

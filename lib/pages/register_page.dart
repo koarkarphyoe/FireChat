@@ -57,7 +57,13 @@ class RegisterPage extends StatelessWidget {
                   const SizedBox(
                     height: 32,
                   ),
-                  ButtonView(registerText, () {}),
+                  ButtonView(registerText, () {
+                    bloc.onTapRegister().then((value) {
+                      Navigator.pop(context);
+                    }).catchError((error) {
+                      showSnackBarMessageWithTextView(context, error);
+                    });
+                  }),
                   const SizedBox(
                     height: 32,
                   ),
@@ -78,6 +84,20 @@ class RegisterPage extends StatelessWidget {
               );
             },
           ),
+        ),
+      ),
+    );
+  }
+
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
+      showSnackBarMessageWithTextView(BuildContext context, String text) {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(text),
+        backgroundColor: (Colors.black),
+        action: SnackBarAction(
+          label: 'dismiss',
+          onPressed: () {},
         ),
       ),
     );
