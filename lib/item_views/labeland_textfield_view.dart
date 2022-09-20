@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 class LabelAndTextFieldView extends StatelessWidget {
   final String labelText;
   final String hintText;
-  const LabelAndTextFieldView(this.labelText, this.hintText, {Key? key})
+  final Function(String?) onChangedText;
+
+  const LabelAndTextFieldView(this.labelText, this.hintText, this.onChangedText,
+      {Key? key})
       : super(key: key);
 
   @override
@@ -21,10 +24,15 @@ class LabelAndTextFieldView extends StatelessWidget {
             height: 8,
           ),
           TextField(
-              decoration: InputDecoration(
-            hintText: hintText,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-          ))
+            onChanged: (text) {
+              onChangedText(text);
+            },
+            decoration: InputDecoration(
+              hintText: hintText,
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+          )
         ],
       ),
     );
