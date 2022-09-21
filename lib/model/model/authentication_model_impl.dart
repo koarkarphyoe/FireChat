@@ -18,4 +18,19 @@ class AuthenticationModelImpl extends AuthenticationModel {
         id: "", userName: userName, userEmail: email, userPassword: password);
     return Future.value(userVO);
   }
+
+  @override
+  Future login(String email, String password) {
+    return realtimeDatabaseAgent.loginUser(email, password);
+  }
+
+  @override
+  UserVo getLoggedInUser() {
+    return realtimeDatabaseAgent.getLoggedInUser();
+  }
+
+  @override
+  bool isLoggedIn() {
+    return realtimeDatabaseAgent.isLoggedIn();
+  }
 }

@@ -35,4 +35,14 @@ class RegisterBloc extends ChangeNotifier {
         .registerNewUser(userName ?? "", userEmail ?? "", password ?? "")
         .whenComplete(() => isLoading = false);
   }
+
+  void hideLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
+
+  void showLoading() {
+    isLoading = true;
+    notifyListeners();
+  }
 }

@@ -13,5 +13,8 @@ abstract class RealtimeDatabaseAgent {
   Future<String> uploadImage(File image);
 
   //Authentication
-  Future registerNewUser(UserVo newUser);
+  Future<void> registerNewUser(UserVo newUser);
+  Future<void> loginUser(String email, String password);
+  bool isLoggedIn();
+  UserVo getLoggedInUser();
 }

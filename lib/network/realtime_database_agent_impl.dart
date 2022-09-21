@@ -70,7 +70,7 @@ class RealtimeDatabaseAgentImpl extends RealtimeDatabaseAgent {
   }
 
   @override
-  Future registerNewUser(UserVo newUser) {
+  Future<void> registerNewUser(UserVo newUser) {
     return auth
         .createUserWithEmailAndPassword(
             email: newUser.userEmail ?? "",
@@ -88,5 +88,23 @@ class RealtimeDatabaseAgentImpl extends RealtimeDatabaseAgent {
         .ref(newUserPath)
         .child(newUser.id.toString())
         .set(newUser.toJson());
+  }
+
+  @override
+  Future<void> loginUser(String email, String password) {
+    return auth.signInWithEmailAndPassword(email: email, password: password);
+  }
+
+  @override
+  bool isLoggedIn() {
+    return auth.currentUser != null;
+  }
+
+  @override
+  UserVo getLoggedInUser() {
+    return UserVo(
+        id: auth.currentUser!.uid,
+        userEmail: auth.currentUser!.email,
+        userName: auth.currentUser!.displayName);
   }
 }
