@@ -4,11 +4,13 @@ import 'package:fire_chat/model/custom_object/user_vo.dart';
 import 'package:fire_chat/network/realtime_database_agent.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../model/custom_object/custom_object.dart';
 
 const newFeedPath = "newfeed";
 const newUserPath = "users";
+const uploadPath = "uploads";
 
 class RealtimeDatabaseAgentImpl extends RealtimeDatabaseAgent {
   //Singleton
@@ -24,6 +26,9 @@ class RealtimeDatabaseAgentImpl extends RealtimeDatabaseAgent {
 
   //Authentication
   FirebaseAuth auth = FirebaseAuth.instance;
+
+  //Storage
+  FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
   @override
   Stream<List<NewFeedCustomObject>> getNewFeedList() {
@@ -65,8 +70,13 @@ class RealtimeDatabaseAgentImpl extends RealtimeDatabaseAgent {
 
   @override
   Future<String> uploadImage(File image) {
-    // TODO: implement uploadImage
-    throw UnimplementedError();
+    return firebaseStorage
+        .ref(uploadPath)
+        .child("${DateTime.now().millisecondsSinceEpoch}")
+        .putFile(image)
+        .then((takeSnapshot) {
+      return takeSnapshot.ref.getDownloadURL();
+    });
   }
 
   @override
@@ -106,5 +116,10 @@ class RealtimeDatabaseAgentImpl extends RealtimeDatabaseAgent {
         id: auth.currentUser!.uid,
         userEmail: auth.currentUser!.email,
         userName: auth.currentUser!.displayName);
+  }
+
+  @override
+  Future<void> logOut() {
+    return auth.signOut();
   }
 }

@@ -33,4 +33,9 @@ class AuthenticationModelImpl extends AuthenticationModel {
   bool isLoggedIn() {
     return realtimeDatabaseAgent.isLoggedIn();
   }
+
+  @override
+  Future<void> logOut() {
+    return realtimeDatabaseAgent.logOut();
+  }
 }

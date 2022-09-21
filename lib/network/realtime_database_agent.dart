@@ -17,4 +17,5 @@ abstract class RealtimeDatabaseAgent {
   Future<void> loginUser(String email, String password);
   bool isLoggedIn();
   UserVo getLoggedInUser();
+  Future<void> logOut();
 }

@@ -6,4 +6,5 @@ abstract class AuthenticationModel {
   Future<void> login(String email, String password);
   bool isLoggedIn();
   UserVo getLoggedInUser();
+  Future<void> logOut();
 }

@@ -1,16 +1,21 @@
 import 'dart:io';
 
 import 'package:fire_chat/model/custom_object/custom_object.dart';
+import 'package:fire_chat/model/custom_object/user_vo.dart';
+import 'package:fire_chat/model/model/authentication_model.dart';
+import 'package:fire_chat/model/model/authentication_model_impl.dart';
 import 'package:fire_chat/model/model/data_model.dart';
 import 'package:fire_chat/model/model/data_model_impl.dart';
 import 'package:flutter/cupertino.dart';
 
 class AddNewPostBloc extends ChangeNotifier {
   DataModel dataModel = DataModelImpl();
+  AuthenticationModel authenticationModel = AuthenticationModelImpl();
 
   String? description = "";
   String? userName = "";
   String? profilePicture = "";
+  UserVo? userVo;
 
   bool isAddPostError = false;
 
@@ -23,6 +28,9 @@ class AddNewPostBloc extends ChangeNotifier {
   File? chooseImage;
 
   AddNewPostBloc(int? id) {
+    
+    userVo = authenticationModel.getLoggedInUser();
+
     if (id != null) {
       isEditMode = true;
       prepopulatedDataForEditMode(id);
@@ -72,7 +80,7 @@ class AddNewPostBloc extends ChangeNotifier {
   }
 
   void prepopulatedDataForAddNewPost() {
-    userName = "Tony";
+    userName = userVo!.userName;
     profilePicture =
         "https://th.bing.com/th/id/R.49376b553f3b5f5b67409592744e5579?rik=WzvpBRDluxLgBg&pid=ImgRaw&r=0";
     notifyListeners();

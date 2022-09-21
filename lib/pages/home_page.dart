@@ -1,6 +1,7 @@
 import 'package:fire_chat/bloc/home_bloc.dart';
 import 'package:fire_chat/item_views/profile_view.dart';
 import 'package:fire_chat/pages/add_new_post_page.dart';
+import 'package:fire_chat/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,14 +23,36 @@ class HomePage extends StatelessWidget {
             style: TextStyle(
                 color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          actions: const [
-            Padding(
-                padding: EdgeInsets.only(right: 16),
+          actions: [
+           const  Padding(
+                padding:  EdgeInsets.only(right: 16),
                 child: Icon(
                   Icons.search,
                   color: Colors.grey,
                   size: 30,
-                ))
+                )),
+            Consumer<HomeBloc>(
+              builder: (BuildContext context, bloc, Widget? child) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: InkWell(
+                    onTap: () {
+                      bloc.logOut().then((value) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => LoginPage())));
+                      });
+                    },
+                    child: const Icon(
+                      Icons.logout,
+                      color: Colors.red,
+                      size: 30,
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
         body: Consumer<HomeBloc>(

@@ -16,97 +16,106 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: RegisterBloc(),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          backgroundColor: Colors.white,
-          title: const Text(
-            registerText,
-            style: TextStyle(
-                fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: Consumer<RegisterBloc>(
-            builder: (BuildContext context, bloc, Widget? child) {
-              return Stack(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      LabelAndTextFieldView(emailLabelText, emailHintText,
-                          (emailText) {
-                        bloc.typedEmailText(emailText);
-                      }),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      LabelAndTextFieldView(userNameLabelText, nameHintText,
-                          (userNameText) {
-                        bloc.typedUserNameText(userNameText);
-                      }),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      LabelAndTextFieldView(passwordLabelText, passwordHintText,
-                          (passwordText) {
-                        bloc.typedPasswordText(passwordText);
-                      }),
-                      const SizedBox(
-                        height: 32,
-                      ),
-                      ButtonView(registerText, () {
-                        bloc.onTapRegister().then((value) {
-                          Navigator.pop(context);
-                        }).catchError((error) {
-                          bloc.hideLoading();
-                          ShowSnackBar.showSnackBar(context, error.toString());
-                        });
-                      }),
-                      const SizedBox(
-                        height: 32,
-                      ),
-                      const Text(
-                        "OR",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 32,
-                      ),
-                      AskUserTextView(alreadyHaveAnAccount, loginText, () {
-                        Navigator.pop(context);
-                      })
-                    ],
+      child: Consumer<RegisterBloc>(
+        builder: (BuildContext context, bloc, Widget? child) {
+          return Stack(
+            children: [
+              Scaffold(
+                backgroundColor: Colors.white,
+                appBar: AppBar(
+                  automaticallyImplyLeading: false,
+                  elevation: 0,
+                  backgroundColor: Colors.white,
+                  title: const Text(
+                    registerText,
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
                   ),
-                  Visibility(
-                    visible: bloc.isLoading,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      color: Colors.black26,
-                      child: const Center(
-                        child: LoadingIndicator(
-                            strokeWidth: 1.0,
-                            backgroundColor: Colors.transparent,
-                            colors: [Colors.amber, Colors.blue],
-                            indicatorType: Indicator.ballPulseRise),
-                      ),
+                ),
+                body: SingleChildScrollView(
+                  child: Consumer<RegisterBloc>(
+                    builder: (BuildContext context, bloc, Widget? child) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          LabelAndTextFieldView(emailLabelText, emailHintText,
+                              (emailText) {
+                            bloc.typedEmailText(emailText);
+                          }),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          LabelAndTextFieldView(userNameLabelText, nameHintText,
+                              (userNameText) {
+                            bloc.typedUserNameText(userNameText);
+                          }),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          LabelAndTextFieldView(
+                              passwordLabelText, passwordHintText,
+                              (passwordText) {
+                            bloc.typedPasswordText(passwordText);
+                          }),
+                          const SizedBox(
+                            height: 32,
+                          ),
+                          ButtonView(registerText, () {
+                            bloc.onTapRegister().then((value) {
+                              Navigator.pop(context);
+                            }).catchError((error) {
+                              bloc.hideLoading();
+                              ShowSnackBar.showSnackBar(
+                                  context, error.toString());
+                            });
+                          }),
+                          const SizedBox(
+                            height: 32,
+                          ),
+                          const Text(
+                            "OR",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 32,
+                          ),
+                          AskUserTextView(alreadyHaveAnAccount, loginText, () {
+                            Navigator.pop(context);
+                          })
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: bloc.isLoading,
+                child: Container(
+                  color: Colors.black12,
+                  child: const Center(
+                    child: SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: LoadingIndicator(
+                          colors: [Colors.white, Colors.transparent],
+                          strokeWidth: 5,
+                          indicatorType: Indicator.ballRotate),
                     ),
-                  )
-                ],
-              );
-            },
-          ),
-        ),
+                  ),
+                ),
+              )
+            ],
+          );
+        },
       ),
     );
   }

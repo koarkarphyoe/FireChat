@@ -17,92 +17,105 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: LoginBloc(),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          title: const Text(
-            loginText,
-            style: TextStyle(
-                fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: Consumer<LoginBloc>(
-            builder: (BuildContext context, bloc, Widget? child) {
-              return Stack(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      LabelAndTextFieldView(emailLabelText, emailHintText,
-                          (emailText) {
-                        bloc.typedEmailText(emailText);
-                      }),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      LabelAndTextFieldView(passwordLabelText, passwordHintText,
-                          (passwordText) {
-                        bloc.typedPasswordText(passwordText);
-                      }),
-                      const SizedBox(
-                        height: 32,
-                      ),
-                      ButtonView(loginText, () {
-                        bloc.onTapLogin().whenComplete(() {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: ((context) => const HomePage())));
-                        }).catchError((error) {
-                          ShowSnackBar.showSnackBar(context, error.toString());
-                        });
-                      }),
-                      const SizedBox(
-                        height: 32,
-                      ),
-                      const Text(
-                        "OR",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 32,
-                      ),
-                      AskUserTextView(dontHaveAnAccount, registerText, () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) => RegisterPage())));
-                      })
-                    ],
+      child: Consumer<LoginBloc>(
+        builder: (BuildContext context, bloc, Widget? child) {
+          return Stack(
+            children: [
+              Scaffold(
+                backgroundColor: Colors.white,
+                appBar: AppBar(
+                  automaticallyImplyLeading: false,
+                  elevation: 0,
+                  backgroundColor: Colors.white,
+                  title: const Text(
+                    loginText,
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
                   ),
-                  Visibility(
-                    visible: bloc.isLoading,
+                ),
+                body: SingleChildScrollView(
+                  child: Consumer<LoginBloc>(
+                    builder: (BuildContext context, bloc, Widget? child) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          LabelAndTextFieldView(emailLabelText, emailHintText,
+                              (emailText) {
+                            bloc.typedEmailText(emailText);
+                          }),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          LabelAndTextFieldView(
+                              passwordLabelText, passwordHintText,
+                              (passwordText) {
+                            bloc.typedPasswordText(passwordText);
+                          }),
+                          const SizedBox(
+                            height: 32,
+                          ),
+                          ButtonView(loginText, () {
+                            bloc.onTapLogin().whenComplete(() {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) =>
+                                          const HomePage())));
+                            }).catchError((error) {
+                              ShowSnackBar.showSnackBar(
+                                  context, error.toString());
+                            });
+                          }),
+                          const SizedBox(
+                            height: 32,
+                          ),
+                          const Text(
+                            "OR",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 32,
+                          ),
+                          AskUserTextView(dontHaveAnAccount, registerText, () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => RegisterPage())));
+                          })
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: bloc.isLoading,
+                child: Container(
+                  color: Colors.black12,
+                  child: const Center(
                     child: SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      child: const Center(
-                        child: SizedBox(
-                          child: LoadingIndicator(
-                              indicatorType: Indicator.audioEqualizer),
-                        ),
-                      ),
+                      height: 100,
+                      width: 100,
+                      child: LoadingIndicator(
+                          colors: [Colors.white, Colors.transparent],
+                          strokeWidth: 5,
+                          indicatorType: Indicator.ballRotate),
                     ),
                   ),
-                ],
-              );
-            },
-          ),
-        ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:fire_chat/model/custom_object/custom_object.dart';
 import 'package:fire_chat/model/custom_object/user_vo.dart';
+import 'package:fire_chat/model/model/authentication_model.dart';
+import 'package:fire_chat/model/model/authentication_model_impl.dart';
 import 'package:fire_chat/network/firebase_storage_agent_impl.dart';
 import 'package:fire_chat/network/realtime_database_agent.dart';
 import 'package:fire_chat/network/realtime_database_agent_impl.dart';
@@ -12,9 +14,10 @@ class DataModelImpl extends DataModel {
     return _singleton;
   }
   DataModelImpl._internal();
-  
+
   //RealtimeDatabase
   RealtimeDatabaseAgent realtimeDatabaseAgent = RealtimeDatabaseAgentImpl();
+  AuthenticationModel authenticationModel = AuthenticationModelImpl();
 
   //CloudFirestore
   // RealtimeDatabaseAgent realtimeDatabaseAgent = FirebaseStorageAgentImpl();
@@ -47,7 +50,7 @@ class DataModelImpl extends DataModel {
         newId,
         imageLink,
         "https://c.wallhere.com/images/13/c5/4009382d8def55e9a6874212be0b-1561467.jpg!d",
-        "Arkar");
+        authenticationModel.getLoggedInUser().userName);
     return Future.value(newFeed);
   }
 

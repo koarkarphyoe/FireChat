@@ -90,4 +90,10 @@ class FirebaseStorageAgentImpl extends RealtimeDatabaseAgent {
     // TODO: implement getLoggedInUser
     throw UnimplementedError();
   }
+  
+  @override
+  Future<void> logOut() {
+    // TODO: implement logOut
+    throw UnimplementedError();
+  }
 }

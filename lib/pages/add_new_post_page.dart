@@ -47,6 +47,10 @@ class AddNewPostPage extends StatelessWidget {
                     builder: (BuildContext context, bloc, Widget? child) {
                       return SingleChildScrollView(
                         child: Column(children: [
+                          UserProfileImageAndNameView(bloc.userName!),
+                          const SizedBox(
+                            height: 16,
+                          ),
                           const DescriptionTextBoxView(),
                           const SizedBox(
                             height: 8,
@@ -85,16 +89,15 @@ class AddNewPostPage extends StatelessWidget {
               Visibility(
                 visible: bloc.isLoading,
                 child: Container(
-                  color: Colors.transparent,
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
+                  color: Colors.black12,
                   child: const Center(
-                    child: LoadingIndicator(
-                      indicatorType: Indicator.ballClipRotatePulse,
-                      colors: [
-                        Colors.amber,
-                        Colors.blue,
-                      ],
+                    child: SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: LoadingIndicator(
+                          colors: [Colors.white, Colors.transparent],
+                          strokeWidth: 5,
+                          indicatorType: Indicator.ballRotate),
                     ),
                   ),
                 ),
@@ -103,6 +106,41 @@ class AddNewPostPage extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+class UserProfileImageAndNameView extends StatelessWidget {
+  final String userName;
+  const UserProfileImageAndNameView(this.userName,{
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          height: 50,
+          width: 50,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              image: const DecorationImage(
+                  image: NetworkImage(
+                      "https://c.wallhere.com/images/13/c5/4009382d8def55e9a6874212be0b-1561467.jpg!d"),
+                  fit: BoxFit.cover)),
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        Text(
+          userName,
+          style:const TextStyle(
+              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
+        ),
+      ],
     );
   }
 }
