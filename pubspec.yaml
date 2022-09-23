@@ -46,6 +46,7 @@ dependencies:
   cloud_firestore: ^3.4.8
   loading_indicator: ^3.1.0
   firebase_auth: ^3.9.0
+  firebase_messaging: ^13.0.2
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,4 @@
+import 'package:fire_chat/FCM/fcm_service.dart';
 import 'package:fire_chat/firebase_options.dart';
 import 'package:fire_chat/model/model/authentication_model.dart';
 import 'package:fire_chat/model/model/authentication_model_impl.dart';
@@ -15,6 +16,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FCMService().listenForMessages();
   runApp(MyApp());
 }
 
