@@ -62,14 +62,18 @@ class LoginPage extends StatelessWidget {
                           ),
                           ButtonView(loginText, () {
                             bloc.onTapLogin().whenComplete(() {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) =>
-                                          const HomePage())));
-                            }).catchError((error) {
-                              ShowSnackBar.showSnackBar(
-                                  context, error.toString());
+                              if (bloc.isLoginError) {
+                                Future.delayed(const Duration(seconds: 1))
+                                    .then((value) {
+                                  ShowSnackBar.showSnackBar(context,
+                                      bloc.loginErrorMessage.toString());
+                                });
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>const HomePage()));
+                              }
                             });
                           }),
                           const SizedBox(

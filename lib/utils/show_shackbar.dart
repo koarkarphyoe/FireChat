@@ -7,7 +7,7 @@ class ShowSnackBar {
         elevation: 0.0,
         //behavior: SnackBarBehavior.floating,
         content: Text(message),
-        duration: const Duration(seconds: 2),
+        duration: const Duration(seconds: 5),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),

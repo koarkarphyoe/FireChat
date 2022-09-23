@@ -9,6 +9,8 @@ class LoginBloc extends ChangeNotifier {
   String? password;
 
   bool isLoading = false;
+  bool isLoginError = false;
+  String? loginErrorMessage = "";
 
   LoginBloc() {}
 
@@ -16,16 +18,22 @@ class LoginBloc extends ChangeNotifier {
     showLoading();
     return authenticationModel
         .login(userEmail ?? "", password ?? "")
-        .whenComplete(() => hideLoading());
+        .onError((error, stackTrace) {
+      loginErrorMessage = error.toString();
+      isLoginError = true;
+      notifyListeners();
+    }).whenComplete(() => hideLoading());
   }
 
   void typedEmailText(String? emailText) {
     userEmail = emailText;
+    isLoginError = false;
     notifyListeners();
   }
 
   void typedPasswordText(String? passwordText) {
     password = passwordText;
+    isLoginError = false;
     notifyListeners();
   }
 
